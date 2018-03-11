@@ -1,0 +1,52 @@
+<template>
+    <div class="side">
+        <el-menu default-active="1-4-1" class="el-menu-vertical-demo"
+                 :collapse="isCollapse">
+            <el-menu-item index="1">
+                <i class="iconfont icon-dayin"></i>
+                <span slot="title">打印</span>
+            </el-menu-item>
+            <el-menu-item index="2">
+                <i class="iconfont icon-fenxiang"></i>
+                <span slot="title">分享</span>
+            </el-menu-item>
+            <el-menu-item index="3">
+                <i class="iconfont icon-denglu"></i>
+                <span slot="title">登录</span>
+            </el-menu-item>
+            <el-menu-item index="4">
+                <i class="iconfont icon-tuichu"></i>
+                <span slot="title">退出</span>
+            </el-menu-item>
+        </el-menu>
+    </div>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                isCollapse: true
+            };
+        },
+        methods: {
+        }
+    }
+</script>
+
+<style scoped>
+    @import url("//at.alicdn.com/t/font_587190_xs67hzo5iolmcxr.css");
+
+    .el-menu-vertical-demo {
+        height: 100vh;
+    }
+
+    .iconfont {
+        font-size: 30px;
+    }
+
+    .el-menu-vertical-demo:not(.el-menu--collapse) {
+        width: 200px;
+        height: 400px;
+    }
+</style>
