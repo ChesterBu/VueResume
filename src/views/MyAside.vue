@@ -23,30 +23,31 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                isCollapse: true
-            };
-        },
-        methods: {
-        }
-    }
+export default {
+  data() {
+    return {
+      isCollapse: true
+    };
+  },
+  methods: {}
+};
 </script>
 
 <style scoped>
-    @import url("//at.alicdn.com/t/font_587190_xs67hzo5iolmcxr.css");
+@import url("//at.alicdn.com/t/font_587190_xs67hzo5iolmcxr.css");
+.el-menu-vertical-demo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+}
 
-    .el-menu-vertical-demo {
-        height: 100vh;
-    }
+.iconfont {
+  font-size: 30px;
+}
 
-    .iconfont {
-        font-size: 30px;
-    }
-
-    .el-menu-vertical-demo:not(.el-menu--collapse) {
-        width: 200px;
-        height: 400px;
-    }
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  height: 400px;
+}
 </style>
