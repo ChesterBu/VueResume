@@ -5,9 +5,9 @@ const appKey = 'Vtblp8GMeEK9FHPm11XN9uIV';
 
 AV.init({appId, appKey});
 
-const TestObject = AV.Object.extend('TestObject');
-const testObject = new TestObject();
-export default async function () {
-    await testObject.save({words: 'Hello World!'});
-    alert('LeanCloud Rocks!');
+const User = AV.Object.extend('User');
+const user = new User();
+export  async function saveUser(info={}) {
+    //await user.save(info);
+    console.log(info);
 }

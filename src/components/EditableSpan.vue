@@ -1,34 +1,36 @@
 <template>
     <span class="editableSpan">
-        <span v-show="!editing">{{value}}</span>
-        <input v-show="editing" type="text" :value="value" @input="triggerEdit">
-        <button @click="editing = !editing">{{edit}}</button>
+        <span class='dbtext'  v-show="!editing" @dblclick="editing = !editing">{{value}}</span>
+        <el-input ref="elInput" size="medium" v-show="editing"  :value="elVal" @blur="triggerEdit">
+          <i slot="suffix" class="el-input__icon el-icon-success" @click='editing = !editing'></i>
+        </el-input>
      </span>
 </template>
 
 <script>
+import {bus} from '../bus';
 export default {
   name: "EditableSpan",
+  props: ["value"],
   data() {
     return {
-      editing: false
-
+      editing: false,
+      elVal:this.value
     };
   },
-  computed: {
-    edit() {
-      return this.editing ? "done" : "edit";
-    }
-  },
-  props: ["value"],
   methods: {
     triggerEdit(e) {
       this.$emit("edit", e.target.value);
+      this.editing = ! this.editing
     }
   }
 };
 </script>
 
 <style scoped lang="scss">
+.dbtext{
+  user-select: none;
+}
+
 
 </style>

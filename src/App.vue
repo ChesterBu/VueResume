@@ -13,6 +13,7 @@ export default {
     MyAside,
     MyMain
   }
+  
 };
 </script>
 <style lang="scss">

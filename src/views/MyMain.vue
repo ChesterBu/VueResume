@@ -96,8 +96,13 @@
 
 <script>
 import editableSpan from "../components/EditableSpan";
+import {bus} from '../bus';
+import {saveUser} from '../leanCloud';
 export default {
   name: "MyMain",
+  created(){
+    bus.$on('save', saveUser.bind(null,this.resume))
+  },
   data() {
     return {
       resume: {
@@ -107,7 +112,7 @@ export default {
         jobTitle: "前端工程师",
         phone: "138111111111",
         email: "example@example.com"
-      }
+      },
     };
   },
   components: {
@@ -116,7 +121,7 @@ export default {
   methods: {
     onEdit(key, value) {
       this.resume[key] = value;
-    }
+    },
   }
 };
 </script>

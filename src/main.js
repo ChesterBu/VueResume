@@ -3,7 +3,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import App from './App.vue'
 import router from './router'
-import  test from './leanCloud'
+import test from './leanCloud'
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
