@@ -6,6 +6,8 @@
 
 - - sideBar
 
+- - signIn/signUp
+
 - - main
 
 - bus.js
