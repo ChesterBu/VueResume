@@ -1,6 +1,6 @@
 <template>
     <span class="editableSpan">
-        <span class='dbtext'  v-show="!editing" @dblclick="editing = !editing">{{value}}</span>
+        <span class='dbtext'  v-show="!editing" @click="editValue">{{value}}</span>
         <el-input ref="elInput" size="medium" v-show="editing"  :value="elVal" @blur="triggerEdit">
           <i slot="suffix" class="el-input__icon el-icon-success" @click='editing = !editing'></i>
         </el-input>
@@ -19,9 +19,17 @@ export default {
     };
   },
   methods: {
-    triggerEdit(e) {
-      this.$emit("edit", e.target.value);
+    editValue(e){
       this.editing = ! this.editing
+      this.$nextTick(
+        ()=>{
+          this.$refs.elInput.$el.children[0].focus()
+        }
+      )
+    },
+    triggerEdit(e) {
+      this.editing = ! this.editing
+      this.$emit("edit", e.target.value);
     }
   }
 };

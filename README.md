@@ -15,3 +15,7 @@
 - - save() 发送保存消息
 
 - - sign() 控制signIn/Up dialog 的出现
+
+- - signInSuccess  登录成功，控制isLogin
+
+- - quit  退出登录 控制isLogin

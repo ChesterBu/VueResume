@@ -16,7 +16,7 @@
                     <i class="iconfont icon-fenxiang"></i>
                     <span slot="title">分享</span>
                 </el-menu-item>
-                <el-menu-item index="4">
+                <el-menu-item index="4" @click="signOut">
                     <i class="iconfont icon-tuichu"></i>
                     <span slot="title">退出</span>
                 </el-menu-item>
@@ -35,42 +35,51 @@
 
 
 <script>
-
-    import {bus} from "../bus";
-
-    export default {
-        data() {
-            return {
-                isLogin:false,
-                isCollapse: true
-            };
-        },
-        methods: {
-            save() {
-                bus.$emit("save");
-            },
-            sign() {
-                bus.$emit('sign')
-            }
-        }
+import { bus } from "../bus";
+import { quitUser } from "../leanCloud";
+export default {
+  props: ["isLogin"],
+  data() {
+    return {
+      isCollapse: true
     };
+  },
+  methods: {
+    save() {
+      bus.$emit("save");
+      this.$notify({
+        title: "成功",
+        message: "保存成功",
+        type: "success",
+        duration:1000
+      });
+    },
+    sign() {
+      bus.$emit("sign");
+    },
+    signOut() {
+      quitUser();
+      bus.$emit("quit");
+    }
+  }
+};
 </script>
 
 <style scoped>
-    @import url("//at.alicdn.com/t/font_587190_r5ozkcadwncm1jor.css");
+@import url("//at.alicdn.com/t/font_587190_r5ozkcadwncm1jor.css");
 
-    .el-menu-vertical-demo {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-    }
+.el-menu-vertical-demo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+}
 
-    .iconfont {
-        font-size: 30px;
-    }
+.iconfont {
+  font-size: 30px;
+}
 
-    .el-menu-item.is-active {
-        color: rgb(126, 129, 135);
-    }
+.el-menu-item.is-active {
+  color: rgb(126, 129, 135);
+}
 </style>
