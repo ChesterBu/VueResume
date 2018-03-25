@@ -3,13 +3,15 @@
     <div id="app">
         <my-aside :isLogin='isLogin'></my-aside>
         <my-main></my-main>
-        <my-dialog></my-dialog>
+        <my-login></my-login>
+        <my-share></my-share>
     </div>
 </template>
 <script>
 import MyAside from "./views/MyAside";
 import MyMain from "./views/MyMain.vue";
-import MyDialog from "./views/MyDialog";
+import MyLogin from "./views/MyLogin.vue";
+import MyShare from './views/MyShare';
 import { bus } from "./bus";
 import { hasLogin } from "./leanCloud";
 export default {
@@ -47,7 +49,8 @@ export default {
   components: {
     MyAside,
     MyMain,
-    MyDialog
+    MyLogin,
+    MyShare
   }
 };
 </script>

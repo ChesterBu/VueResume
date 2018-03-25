@@ -12,9 +12,9 @@
 
 - bus.js
 
-- - save() 发送保存消息
+- - save 发送保存消息
 
-- - sign() 控制signIn/Up dialog 的出现
+- - sign 控制signIn/Up dialog 的出现
 
 - - signInSuccess  登录成功，控制isLogin
 

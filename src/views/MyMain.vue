@@ -1,4 +1,3 @@
-<!--suppress ALL -->
 <template>
     <div class="resume">
         <section class="profile">
@@ -21,76 +20,45 @@
         <section class="skills">
             <h2>技能</h2>
             <ul>
-                <li>
-                    <span class="name"> 静态页面制作 </span>
-                    <div class="description">完美实现设计稿</div>
+                <li v-for="skill,index in resume.skills">
+                    <editable-span :value='skill.name' @edit="onEdit(`skills[${index}].name`,$event)"></editable-span>
+                    <div class="description">
+                        <editable-span :value="skill.description" @edit="onEdit(`skills[${index}].description`,$event)">
+                        </editable-span>
+                    </div>
+                    <span v-show="resume.skills.length > 2" @click="removeSkill(index)">X</span>
                 </li>
-                <li>
-                    <span class="name"> 静态页面制作 </span>
-                    <div class="description">完美实现设计稿</div>
-                </li>
-                <li>
-                    <span class="name"> 静态页面制作 </span>
-                    <div class="description">完美实现设计稿</div>
-                </li>
-                <li>
-                    <span class="name"> 静态页面制作 </span>
-                    <div class="description">完美实现设计稿</div>
-                </li>
+                <li @click="addSkill">添加</li>
             </ul>
         </section>
         <section class="projects">
             <h2>项目经历</h2>
-            <ol>
-                <li>
-                    <header>
-                        <div class="start">
-                            <h3 class="name">我的简历</h3>
-                            <span class="link">http://xxxx/xxx</span>
-                        </div>
-                        <div class="end">
-                            <span class="keywords">CSS3、jQuery、响应式</span>
-                        </div>
-                    </header>
-                    <p class="description">我是怎么做这个项目的我是怎么做这个项目的我是怎么做这个项目的我是怎么做这个项目的我是怎么做这个项目的</p>
-                </li>
-                <li>
-                    <header>
-                        <div class="start">
-                            <h3 class="name">我的简历</h3>
-                            <span class="link">http://xxxx/xxx</span>
-                        </div>
-                        <div class="end">
-                            <span class="keywords">CSS3、jQuery、响应式</span>
-                        </div>
-                    </header>
-                    <p class="description">我是怎么做这个项目的我是怎么做这个项目的我是怎么做这个项目的我是怎么做这个项目的我是怎么做这个项目的</p>
-                </li>
-                <li>
-                    <header>
-                        <div class="start">
-                            <h3 class="name">我的简历</h3>
-                            <span class="link">http://xxxx/xxx</span>
-                        </div>
-                        <div class="end">
-                            <span class="keywords">CSS3、jQuery、响应式</span>
-                        </div>
-                    </header>
-                    <p class="description">我是怎么做这个项目的我是怎么做这个项目的我是怎么做这个项目的我是怎么做这个项目的我是怎么做这个项目的</p>
-                </li>
-                <li>
-                    <header>
-                        <div class="start">
-                            <h3 class="name">我的简历</h3>
-                            <span class="link">http://xxxx/xxx</span>
-                        </div>
-                        <div class="end">
-                            <span class="keywords">CSS3、jQuery、响应式</span>
-                        </div>
-                    </header>
-                    <p class="description">我是怎么做这个项目的我是怎么做这个项目的我是怎么做这个项目的我是怎么做这个项目的我是怎么做这个项目的</p>
-                </li>
-            </ol>
+        	<ol>
+          		<li v-for="project,index in resume.projects">
+					<header>
+						<div class="start">
+							<h3 class="name">
+								<editable-span  :value="project.name" @edit="onEdit(`projects[${index}].name`, $event)"></editable-span>
+							</h3>
+							<span class="link">
+								<editable-span :value="project.link" @edit="onEdit(`projects[${index}].link`, $event)"></editable-span>
+							</span>
+						</div>
+						<div class="end">
+							<span class="keywords">
+								<editable-span :value="project.keywords" @edit="onEdit(`projects[${index}].keywords`, $event)"></editable-span>
+							</span>
+						</div>
+					</header>
+					<p class="description">
+						<editable-span :value="project.description" @edit="onEdit(`projects[${index}].description`, $event)"></editable-span>
+					</p>
+					<span class="remove" @click="removeProject(index)" v-show="resume.projects.length>2">x</span>
+          		</li>
+          		<li>
+            		<span @click="addProject">添加</span>
+          		</li>
+        	</ol>
         </section>
     </div>
 </template>
@@ -113,7 +81,9 @@
                     birthday: "1990年1月",
                     jobTitle: "前端工程师",
                     phone: "138111111111",
-                    email: "example@example.com"
+                    email: "example@example.com",
+                    skills:[{name:'请填写技能名称',description:'请填写技能描述'},{name:'请填写技能名称',description:'请填写技能描述'},],
+					projects:[{name: '请填写项目名称', link: 'http://...', keywords: '请填写关键词', description: '请详细描述'},{name: '请填写项目名称', link: 'http://...', keywords: '请填写关键词', description: '请详细描述'}]
                 },
             };
         },
@@ -122,68 +92,90 @@
         },
         methods: {
             onEdit(key, value) {
-                this.resume[key] = value;
+                let keys = key.replace(/\[(\d+)\]/g,(match,number)=>`.${number}`).split('.')
+                let result = this.resume
+                for (let i = 0; i < keys.length; i++) {
+                    if (i === keys.length - 1) {
+                        result[keys[i]] = value
+                    } else {
+                        result = result[keys[i]]
+                    }
+                }
             },
+            removeSkill(index){
+                this.resume.skills.splice(index,1)
+            },
+            addSkill(){
+                this.resume.skills.push({name:'请填写技能名称',description:'请填写技能描述'})
+            },
+			addProject () {
+      			this.resume.projects.push(
+        			{name: '请填写项目名称', link: 'http://...', keywords: '请填写关键词', description: '请详细描述'},
+      			)
+    		},
+    		removeProject (index) {
+      			this.resume.projects.splice(index, 1)
+    		},
         }
     };
 </script>
 
 <style scoped>
-    .resume {
-        width: 800px;
-        margin: 0 auto;
-        padding: 0 70px;
-    }
+.resume {
+  width: 800px;
+  margin: 0 auto;
+  padding: 0 70px;
+}
 
-    .resume > section {
-        margin: 50px 0;
-    }
+.resume > section {
+  margin: 50px 0;
+}
 
-    .resume > section > h1 {
-        text-align: center;
-        margin: 20px;
-    }
+.resume > section > h1 {
+  text-align: center;
+  margin: 20px;
+}
 
-    .resume > section > h2 {
-        text-align: center;
-        margin: 20px;
-    }
+.resume > section > h2 {
+  text-align: center;
+  margin: 20px;
+}
 
-    .resume .profile {
-        text-align: center;
-    }
+.resume .profile {
+  text-align: center;
+}
 
-    .resume .skills > ul {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
+.resume .skills > ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 
-    .resume .skills > ul > li {
-        width: 48%;
-        border: 1px solid #ddd;
-        padding: 10px;
-        margin-top: 10px;
-    }
+.resume .skills > ul > li {
+  width: 48%;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-top: 10px;
+}
 
-    .resume .projects > ol > li {
-        margin: 30px 0;
-        border: 1px solid #ddd;
-        padding: 10px;
-    }
+.resume .projects > ol > li {
+  margin: 30px 0;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
 
-    .resume .projects header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 10px;
-    }
+.resume .projects header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 
-    .resume .projects header .name {
-        margin-right: 1em;
-    }
+.resume .projects header .name {
+  margin-right: 1em;
+}
 
-    .resume .projects header .start {
-        display: flex;
-    }
+.resume .projects header .start {
+  display: flex;
+}
 </style>

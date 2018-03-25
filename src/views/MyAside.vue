@@ -12,7 +12,7 @@
                     <i class="iconfont icon-dayin"></i>
                     <span slot="title">打印</span>
                 </el-menu-item>
-                <el-menu-item index="3">
+                <el-menu-item index="3" @click="share">
                     <i class="iconfont icon-fenxiang"></i>
                     <span slot="title">分享</span>
                 </el-menu-item>
@@ -28,9 +28,7 @@
                 </el-menu-item>
             </template>
         </el-menu>
-
-
-</div>
+    </div>
 </template>
 
 
@@ -51,7 +49,7 @@ export default {
         title: "成功",
         message: "保存成功",
         type: "success",
-        duration:1000
+        duration: 1000
       });
     },
     sign() {
@@ -60,6 +58,9 @@ export default {
     signOut() {
       quitUser();
       bus.$emit("quit");
+    },
+    share() {
+      bus.$emit('sharelink')
     }
   }
 };
