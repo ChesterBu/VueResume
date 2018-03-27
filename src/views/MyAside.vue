@@ -1,6 +1,6 @@
 <!--suppress ALL, JSAnnotator -->
 <template>
-    <div class="side">
+    <div class="side" v-if="!preview">
         <el-menu default-active="1-4-1" class="el-menu-vertical-demo"
                  :collapse="isCollapse">
             <template v-if="isLogin">
@@ -30,16 +30,18 @@
         </el-menu>
     </div>
 </template>
-
-
 <script>
 import { bus } from "../bus";
 import { quitUser } from "../leanCloud";
 export default {
   props: ["isLogin"],
+  created(){
+    bus.$on('preview',this.handlePreview)
+  },
   data() {
     return {
-      isCollapse: true
+      isCollapse: true,
+      preview:false
     };
   },
   methods: {
@@ -61,6 +63,9 @@ export default {
     },
     share() {
       bus.$emit('sharelink')
+    },
+    handlePreview(){
+      this.preview = true
     }
   }
 };

@@ -69,7 +69,7 @@ export default {
             
         })
     },
-    async onSignUp() {
+    onSignUp() {
         signUp(this.signUp,()=>{
             this.dialogVisible = false
         },()=>{

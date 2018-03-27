@@ -2,7 +2,7 @@
     <span class="editableSpan">
         <span class='dbtext'  v-show="!editing" @click="editValue">{{value}}</span>
         <el-input ref="elInput" size="medium" v-show="editing"  :value="elVal" @blur="triggerEdit">
-          <i slot="suffix" class="el-input__icon el-icon-success" @click='editing = !editing'></i>
+          <i slot="suffix" class="el-input__icon el-icon-success" @click='edit = !edit'></i>
         </el-input>
      </span>
 </template>
@@ -12,15 +12,24 @@ import {bus} from '../bus';
 export default {
   name: "EditableSpan",
   props: ["value"],
+  created(){
+    bus.$on('preview',this.handlePreview)
+  },
   data() {
     return {
-      editing: false,
-      elVal:this.value
+      edit: false,
+      elVal:this.value,
+      preview:false
     };
+  },
+  computed:{
+    editing(){
+      return this.edit && !this.preview
+    }
   },
   methods: {
     editValue(e){
-      this.editing = ! this.editing
+      this.edit = ! this.edit
       this.$nextTick(
         ()=>{
           this.$refs.elInput.$el.children[0].focus()
@@ -28,8 +37,11 @@ export default {
       )
     },
     triggerEdit(e) {
-      this.editing = ! this.editing
+      this.edit = ! this.edit
       this.$emit("edit", e.target.value);
+    },
+    handlePreview(){
+      this.preview = true
     }
   }
 };

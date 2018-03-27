@@ -28,8 +28,9 @@
                     </div>
                     <span v-show="resume.skills.length > 2" @click="removeSkill(index)">X</span>
                 </li>
-                <li @click="addSkill">添加</li>
+                <li v-if='!preview' @click="addSkill">添加</li>
             </ul>
+            
         </section>
         <section class="projects">
             <h2>项目经历</h2>
@@ -55,9 +56,7 @@
 					</p>
 					<span class="remove" @click="removeProject(index)" v-show="resume.projects.length>2">x</span>
           		</li>
-          		<li>
-            		<span @click="addProject">添加</span>
-          		</li>
+                <li v-if="!preview" @click="addProject">添加</li>
         	</ol>
         </section>
     </div>
@@ -72,19 +71,20 @@
         name: "MyMain",
         created() {
             bus.$on('save', saveUser.bind(null, this.resume))
+            bus.$on('preview',this.handlePreview)
         },
         data() {
             return {
                 resume: {
-                    name: "姓名",
+                    name:'姓名',
                     gender: "女",
-                    birthday: "1990年1月",
-                    jobTitle: "前端工程师",
+                   jobTitle: "前端工程师",
                     phone: "138111111111",
                     email: "example@example.com",
                     skills:[{name:'请填写技能名称',description:'请填写技能描述'},{name:'请填写技能名称',description:'请填写技能描述'},],
 					projects:[{name: '请填写项目名称', link: 'http://...', keywords: '请填写关键词', description: '请详细描述'},{name: '请填写项目名称', link: 'http://...', keywords: '请填写关键词', description: '请详细描述'}]
                 },
+                preview:false
             };
         },
         components: {
@@ -115,7 +115,12 @@
     		},
     		removeProject (index) {
       			this.resume.projects.splice(index, 1)
-    		},
+            },
+            handlePreview(payload){
+                this.preview = true
+                console.log(1);
+                this.resume = {...payload,...this.resume}
+            }
         }
     };
 </script>

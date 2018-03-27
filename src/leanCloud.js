@@ -5,12 +5,11 @@ AV.init({ appId, appKey });
 const User = AV.Object.extend("User");
 const user = new User();
 
-
-export  function saveUser(info) {
-  let {id} = AV.User.current()
-  let user = AV.Object.createWithoutData('User', id);
+export function saveUser(info) {
+  let { id } = AV.User.current();
+  let user = AV.Object.createWithoutData("User", id);
   // 修改属性
-  user.set('resume', info);
+  user.set("resume", info);
   // 保存到云端
   user.save();
 }
@@ -43,13 +42,32 @@ export function signIn(info, res, rej) {
     }
   );
 }
-
-export function hasLogin(){
-    let user = AV.User.current()
-    if(user)return true;
-    return false
+export function getLink(){
+  let user = AV.User.current()
+  if (user) {
+    return location.origin + location.pathname + '?user_id=' + user.id
+  }
 }
 
-export function quitUser(){
-    AV.User.logOut();
+export function getResume(userId) {
+  let query = new AV.Query("User");
+  return query.get(userId).then(
+    user => {
+      let resume = user.toJSON().resume;
+      return resume;
+    },
+    error => {
+      // 异常处理
+    }
+  );
+}
+
+export function hasLogin() {
+  let user = AV.User.current();
+  if (user) return true;
+  return false;
+}
+
+export function quitUser() {
+  AV.User.logOut();
 }

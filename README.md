@@ -19,3 +19,5 @@
 - - signInSuccess  登录成功，控制isLogin
 
 - - quit  退出登录 控制isLogin
+
+- - preview 开启预览模式

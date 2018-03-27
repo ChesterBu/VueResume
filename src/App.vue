@@ -13,7 +13,7 @@ import MyMain from "./views/MyMain.vue";
 import MyLogin from "./views/MyLogin.vue";
 import MyShare from './views/MyShare';
 import { bus } from "./bus";
-import { hasLogin } from "./leanCloud";
+import { hasLogin,getResume} from "./leanCloud";
 export default {
   name: "app",
   created() {
@@ -21,9 +21,12 @@ export default {
     bus.$on("quit", this.logOut);
     this.isLogin = hasLogin();
   },
+  beforeMount(){
+    this.router()
+  },
   data() {
     return {
-      isLogin: false
+      isLogin: false,
     };
   },
   methods: {
@@ -44,7 +47,19 @@ export default {
           type: 'success',
           duration:1000
         });
+    },
+    async router(){
+      if(window.location.href.indexOf('user_id')){
+        let userId = window.location.href.split('=')[1]
+        try{
+          let resume = await getResume(userId)
+          bus.$emit('preview',resume)
+        } catch(e){
+
+        }
+      }
     }
+    
   },
   components: {
     MyAside,
