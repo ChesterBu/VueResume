@@ -8,7 +8,7 @@
                     <i class="iconfont icon-save"></i>
                     <span slot="title">保存</span>
                 </el-menu-item>
-                <el-menu-item index="2">
+                <el-menu-item index="2" @click="print">
                     <i class="iconfont icon-dayin"></i>
                     <span slot="title">打印</span>
                 </el-menu-item>
@@ -66,6 +66,9 @@ export default {
     },
     handlePreview(){
       this.preview = true
+    },
+    print(){
+      window.print()
     }
   }
 };

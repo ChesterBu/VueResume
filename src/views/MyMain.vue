@@ -8,8 +8,6 @@
                 <editable-span :value="resume.jobTitle" @edit="onEdit('jobTitle', $event)"></editable-span>
             </p>
             <p class="profile">
-                <editable-span :value="resume.birthday" @edit="onEdit('birthday', $event)"></editable-span>
-                |
                 <editable-span :value="resume.gender" @edit="onEdit('gender', $event)"></editable-span>
                 |
                 <editable-span :value="resume.email" @edit="onEdit('email', $event)"></editable-span>
@@ -28,9 +26,8 @@
                     </div>
                     <span v-show="resume.skills.length > 2" @click="removeSkill(index)">X</span>
                 </li>
-                <li v-if='!preview' @click="addSkill">添加</li>
-            </ul>
-            
+                <li class='add' v-if='!preview' @click="addSkill">添加</li>
+            </ul>       
         </section>
         <section class="projects">
             <h2>项目经历</h2>
@@ -56,7 +53,7 @@
 					</p>
 					<span class="remove" @click="removeProject(index)" v-show="resume.projects.length>2">x</span>
           		</li>
-                <li v-if="!preview" @click="addProject">添加</li>
+                <li class="add" v-if="!preview" @click="addProject">添加</li>
         	</ol>
         </section>
     </div>

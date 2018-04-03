@@ -98,6 +98,22 @@ body {
 button {
   font: inherit;
 }
+@media print {
+  .side{
+    display: none;
+  }
+  .el-tooltip__popper.is-dark{
+    display: none;
+  }
+  #app .resume{
+    width: 100%;
+    padding: 50px;
+  }
+  .add{
+    display: none;
+  }
+}
+
 .el-dialog__headerbtn .el-dialog__close {
   color: #909399;
   position: relative;
